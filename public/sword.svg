@@ -1,0 +1,12 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Shield background -->
+  <path d="M100 10 L40 40 L40 80 Q40 140 100 190 Q160 140 160 80 L160 40 Z" fill="#1a1a2e" stroke="#d4a017" stroke-width="4"/>
+  
+  <!-- Sword -->
+  <rect x="95" y="60" width="10" height="80" fill="#d4a017"/>
+  <circle cx="100" cy="60" r="8" fill="#d4a017"/>
+  <path d="M85 140 L100 160 L115 140 Z" fill="#d4a017"/>
+  
+  <!-- Cross guard -->
+  <rect x="75" y="55" width="50" height="6" fill="#d4a017"/>
+</svg>
