@@ -150,23 +150,61 @@ export function ArenaPage() {
 
   if (warriorLoading || questsLoading) {
     return (
-      <div className="min-h-screen bg-dark-bg flex items-center justify-center">
+      <div 
+        className="min-h-screen flex items-center justify-center"
+        style={{ background: '#0b0f14' }}
+      >
         <div className="text-center">
-          <div className="animate-spin text-6xl mb-4">⚔️</div>
-          <p className="text-parchment text-xl">Loading Arena...</p>
+          <div 
+            className="animate-spin text-6xl mb-4"
+            style={{
+              filter: 'drop-shadow(0 0 20px rgba(212, 175, 55, 0.5))'
+            }}
+          >
+            ⚔️
+          </div>
+          <p 
+            className="text-xl"
+            style={{ 
+              color: '#f3f4f6',
+              fontFamily: "'Cinzel', serif"
+            }}
+          >
+            Loading Arena...
+          </p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-dark-bg flex flex-col">
+    <div 
+      className="min-h-screen flex flex-col"
+      style={{ background: '#0b0f14' }}
+    >
       <Navbar warrior={warrior} timeRemaining={timeRemaining} isContestActive={isContestActive} />
 
       <div className="flex-1 flex overflow-hidden">
         {/* Left Panel: Quest List + Details */}
-        <div className="w-1/3 border-r border-stone overflow-y-auto p-4 space-y-4">
-          <h2 className="text-2xl font-serif font-bold text-gold mb-4">Quests</h2>
+        <div 
+          className="w-1/3 overflow-y-auto p-6 space-y-4"
+          style={{
+            background: 'linear-gradient(180deg, #111827 0%, #0b0f14 100%)',
+            borderRight: '1px solid rgba(212, 175, 55, 0.2)',
+            boxShadow: 'inset -1px 0 0 rgba(212, 175, 55, 0.1)'
+          }}
+        >
+          <h2 
+            className="text-3xl font-bold mb-6"
+            style={{
+              fontFamily: "'Cinzel', serif",
+              color: '#d4af37',
+              textShadow: '0 0 15px rgba(212, 175, 55, 0.3)',
+              letterSpacing: '0.05em'
+            }}
+          >
+            ⚔️ QUESTS
+          </h2>
 
           {quests.map((quest) => (
             <QuestCard
@@ -180,38 +218,75 @@ export function ArenaPage() {
 
           {/* Quest Details */}
           {selectedQuest && (
-            <div className="mt-6 p-4 bg-dark-surface border border-stone rounded-lg">
-              <h3 className="text-xl font-serif font-bold text-gold mb-3">
+            <div 
+              className="mt-6 p-6 rounded-lg card-gothic"
+            >
+              <h3 
+                className="text-2xl font-bold mb-4"
+                style={{
+                  fontFamily: "'Cinzel', serif",
+                  color: '#f5d27a',
+                  textShadow: '0 0 10px rgba(212, 175, 55, 0.3)'
+                }}
+              >
                 {selectedQuest.title}
               </h3>
               <div className="prose prose-invert prose-sm max-w-none">
                 <div
-                  className="text-gray-300 whitespace-pre-wrap"
+                  className="whitespace-pre-wrap"
+                  style={{ color: 'rgba(243, 244, 246, 0.9)' }}
                   dangerouslySetInnerHTML={{ __html: selectedQuest.description }}
                 />
               </div>
 
               {/* Sample Test Cases */}
               {selectedQuest.test_cases.length > 0 && (
-                <div className="mt-4">
-                  <h4 className="text-sm font-bold text-parchment mb-2">
-                    Sample Test Cases:
+                <div className="mt-6">
+                  <div className="divider-gold my-4" />
+                  <h4 
+                    className="text-sm font-bold mb-3 uppercase tracking-wider"
+                    style={{ 
+                      color: '#f5d27a',
+                      fontFamily: "'Inter', sans-serif",
+                      letterSpacing: '0.1em'
+                    }}
+                  >
+                    Sample Test Cases
                   </h4>
-                  <div className="space-y-2">
+                  <div className="space-y-3">
                     {selectedQuest.test_cases.map((tc, idx) => (
                       <div
                         key={tc.id}
-                        className="bg-shadow p-3 rounded border border-stone text-xs"
+                        className="p-4 rounded text-xs"
+                        style={{
+                          background: 'rgba(17, 24, 39, 0.6)',
+                          border: '1px solid rgba(212, 175, 55, 0.15)'
+                        }}
                       >
-                        <p className="text-gray-400 mb-1">Test Case {idx + 1}</p>
-                        <div className="space-y-1">
+                        <p 
+                          className="mb-2 font-semibold"
+                          style={{ color: 'rgba(243, 244, 246, 0.6)' }}
+                        >
+                          Test Case {idx + 1}
+                        </p>
+                        <div className="space-y-2">
                           <div>
-                            <span className="text-gray-400">Input: </span>
-                            <code className="text-parchment">{tc.input}</code>
+                            <span style={{ color: 'rgba(243, 244, 246, 0.5)' }}>Input: </span>
+                            <code 
+                              className="font-mono"
+                              style={{ color: '#f3f4f6' }}
+                            >
+                              {tc.input}
+                            </code>
                           </div>
                           <div>
-                            <span className="text-gray-400">Expected Output: </span>
-                            <code className="text-parchment">{tc.expected_output}</code>
+                            <span style={{ color: 'rgba(243, 244, 246, 0.5)' }}>Expected: </span>
+                            <code 
+                              className="font-mono"
+                              style={{ color: '#f3f4f6' }}
+                            >
+                              {tc.expected_output}
+                            </code>
                           </div>
                         </div>
                       </div>
@@ -224,10 +299,10 @@ export function ArenaPage() {
         </div>
 
         {/* Right Panel: Code Editor + Submit */}
-        <div className="flex-1 flex flex-col p-4">
+        <div className="flex-1 flex flex-col p-6">
           {selectedQuest ? (
             <>
-              <div className="flex-1 mb-4">
+              <div className="flex-1 mb-6">
                 <CodeEditor
                   value={code}
                   onChange={handleCodeChange}
@@ -241,9 +316,9 @@ export function ArenaPage() {
               <button
                 onClick={handleSubmit}
                 disabled={submitting || !code.trim() || isContestOver}
-                className="w-full bg-gold hover:bg-gold-light text-dark-bg font-serif font-bold py-3 px-6 rounded transition-all disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105 mb-4"
+                className="w-full btn-primary py-4 text-base mb-4"
               >
-                {submitting ? 'Submitting...' : isContestOver ? 'Contest Ended' : 'Submit Solution'}
+                {submitting ? '⚔️ Submitting...' : isContestOver ? 'Contest Ended' : '⚔️ Submit Solution ⚔️'}
               </button>
 
               {/* Result */}
@@ -251,7 +326,27 @@ export function ArenaPage() {
             </>
           ) : (
             <div className="flex items-center justify-center h-full">
-              <p className="text-gray-400 text-xl">Select a quest to start coding</p>
+              <div className="text-center">
+                <div 
+                  className="text-6xl mb-4"
+                  style={{
+                    filter: 'drop-shadow(0 0 20px rgba(212, 175, 55, 0.3))',
+                    opacity: 0.3
+                  }}
+                >
+                  📜
+                </div>
+                <p 
+                  className="text-xl"
+                  style={{ 
+                    color: 'rgba(243, 244, 246, 0.4)',
+                    fontFamily: "'Cormorant Garamond', serif",
+                    fontStyle: 'italic'
+                  }}
+                >
+                  Select a quest to begin your journey
+                </p>
+              </div>
             </div>
           )}
         </div>

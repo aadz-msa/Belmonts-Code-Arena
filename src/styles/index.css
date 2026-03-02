@@ -1,33 +1,66 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600;700&display=swap');
 
 @theme {
-  /* Colors - Medieval palette */
-  --color-dark-bg: #0f0e17;
-  --color-dark-surface: #1a1a2e;
-  --color-gold: #d4a017;
-  --color-gold-light: #f0c040;
-  --color-blood-red: #8b0000;
-  --color-parchment: #d4c5a9;
-  --color-stone: #3a3a4a;
-  --color-shadow: #16213e;
+  /* Premium Medieval Gothic Color Palette */
+  --color-bg-primary: #0b0f14;
+  --color-bg-secondary: #111827;
+  --color-gold-primary: #d4af37;
+  --color-gold-soft: #f5d27a;
+  --color-text-primary: #f3f4f6;
+  --color-danger: #7f1d1d;
+  --color-stone: #2d3748;
+  --color-shadow: #1a202c;
+  --color-overlay: rgba(0, 0, 0, 0.75);
 
-  /* Fonts */
-  --font-serif: 'Cinzel', serif;
-  --font-sans: 'Inter', sans-serif;
+  /* Typography */
+  --font-heading: 'Cinzel', 'Cormorant Garamond', serif;
+  --font-display: 'Playfair Display', 'Cinzel', serif;
+  --font-body: 'Inter', sans-serif;
 
   /* Animations */
-  @keyframes flicker {
+  @keyframes goldGlow {
+    0%, 100% { 
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.4), 
+                  0 0 25px rgba(212, 175, 55, 0.2);
+    }
+    50% { 
+      box-shadow: 0 0 25px rgba(212, 175, 55, 0.6), 
+                  0 0 40px rgba(212, 175, 55, 0.3);
+    }
+  }
+
+  @keyframes subtleFlicker {
     0%, 100% { opacity: 1; }
-    50% { opacity: 0.8; }
+    25% { opacity: 0.95; }
+    75% { opacity: 0.98; }
   }
 
-  @keyframes pulse-glow {
-    0%, 100% { box-shadow: 0 0 10px var(--color-gold); }
-    50% { box-shadow: 0 0 20px var(--color-gold-light); }
+  @keyframes pulseRed {
+    0%, 100% { 
+      color: #7f1d1d;
+      text-shadow: 0 0 8px rgba(127, 29, 29, 0.5);
+    }
+    50% { 
+      color: #991b1b;
+      text-shadow: 0 0 12px rgba(127, 29, 29, 0.7);
+    }
   }
 
-  --animate-flicker: flicker 2s ease-in-out infinite;
-  --animate-pulse-glow: pulse-glow 1.5s ease-in-out infinite;
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes slideUnderline {
+    from { width: 0; }
+    to { width: 100%; }
+  }
+
+  --animate-gold-glow: goldGlow 2s ease-in-out infinite;
+  --animate-flicker: subtleFlicker 3s ease-in-out infinite;
+  --animate-pulse-red: pulseRed 1.5s ease-in-out infinite;
+  --animate-fade-in: fadeIn 0.5s ease-out forwards;
 }
 
 * {
@@ -37,37 +70,229 @@
 }
 
 body {
-  font-family: var(--font-sans);
-  background-color: var(--color-dark-bg);
-  color: var(--color-parchment);
+  font-family: var(--font-body);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: 
+    radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.02) 0%, transparent 50%);
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-serif);
+  font-family: var(--font-heading);
   font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
 #root {
   min-height: 100vh;
 }
 
-/* Scrollbar styling */
+/* Custom Scrollbar - Dark with Gold Accent */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 12px;
+  height: 12px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-dark-bg);
+  background: var(--color-bg-primary);
+  border-left: 1px solid rgba(212, 175, 55, 0.1);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-stone);
-  border-radius: 5px;
+  background: linear-gradient(180deg, #2d3748 0%, #1a202c 100%);
+  border-radius: 6px;
+  border: 2px solid var(--color-bg-primary);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-gold);
+  background: linear-gradient(180deg, var(--color-gold-primary) 0%, #b8941f 100%);
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
+}
+
+/* Premium Button Base */
+.btn-primary {
+  padding: 0.75rem 2rem;
+  background: linear-gradient(135deg, #1a202c 0%, #0b0f14 100%);
+  border: 2px solid var(--color-gold-primary);
+  color: var(--color-gold-soft);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 
+    inset 0 1px 0 rgba(212, 175, 55, 0.2),
+    0 4px 12px rgba(0, 0, 0, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn-primary:hover::before {
+  left: 100%;
+}
+
+.btn-primary:hover {
+  transform: scale(1.03) translateY(-1px);
+  box-shadow: 
+    0 0 20px rgba(212, 175, 55, 0.4),
+    0 0 40px rgba(212, 175, 55, 0.2),
+    inset 0 1px 0 rgba(212, 175, 55, 0.3),
+    0 6px 20px rgba(0, 0, 0, 0.6);
+  border-color: var(--color-gold-soft);
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Secondary Button */
+.btn-secondary {
+  padding: 0.75rem 2rem;
+  background: transparent;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  font-size: 0.875rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  border-color: var(--color-gold-primary);
+  color: var(--color-gold-soft);
+  background: rgba(212, 175, 55, 0.05);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+}
+
+/* Premium Card */
+.card-gothic {
+  background: linear-gradient(135deg, #111827 0%, #0b0f14 100%);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 8px;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(212, 175, 55, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.card-gothic::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(212, 175, 55, 0.5) 50%, 
+    transparent 100%);
+}
+
+/* Divider */
+.divider-gold {
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(212, 175, 55, 0.6) 50%,
+    transparent 100%);
+  margin: 2rem 0;
+}
+
+/* Glass Effect for Navbar */
+.glass-dark {
+  background: rgba(17, 24, 39, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+/* Table Styling */
+.table-gothic {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.table-gothic thead {
+  background: linear-gradient(135deg, #1a202c 0%, #111827 100%);
+}
+
+.table-gothic th {
+  color: var(--color-gold-soft);
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 1rem 1.5rem;
+  border-bottom: 2px solid rgba(212, 175, 55, 0.3);
+}
+
+.table-gothic tbody tr {
+  transition: all 0.2s ease;
+  border-bottom: 1px solid rgba(45, 55, 72, 0.5);
+}
+
+.table-gothic tbody tr:hover {
+  background: rgba(212, 175, 55, 0.05);
+}
+
+/* Input Styling */
+.input-gothic {
+  background: var(--color-bg-primary);
+  border: 1px solid var(--color-stone);
+  color: var(--color-text-primary);
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  font-family: var(--font-body);
+  transition: all 0.3s ease;
+}
+
+.input-gothic:focus {
+  outline: none;
+  border-color: var(--color-gold-primary);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1),
+              0 0 15px rgba(212, 175, 55, 0.2);
+}
+
+.input-gothic::placeholder {
+  color: rgba(243, 244, 246, 0.3);
+}
+
+/* Text Selection */
+::selection {
+  background: rgba(212, 175, 55, 0.3);
+  color: var(--color-text-primary);
+}
+
+/* Focus Visible */
+:focus-visible {
+  outline: 2px solid var(--color-gold-primary);
+  outline-offset: 2px;
 }
