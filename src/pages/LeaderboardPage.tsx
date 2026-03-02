@@ -38,49 +38,96 @@ export function LeaderboardPage() {
 
   if (warriorLoading || leaderboardLoading) {
     return (
-      <div className="min-h-screen bg-dark-bg flex items-center justify-center">
+      <div 
+        className="min-h-screen flex items-center justify-center"
+        style={{ background: '#0b0f14' }}
+      >
         <div className="text-center">
-          <div className="animate-spin text-6xl mb-4">⚔️</div>
-          <p className="text-parchment text-xl">Loading Leaderboard...</p>
+          <div 
+            className="animate-spin text-6xl mb-4"
+            style={{
+              filter: 'drop-shadow(0 0 20px rgba(212, 175, 55, 0.5))'
+            }}
+          >
+            ⚔️
+          </div>
+          <p 
+            className="text-xl"
+            style={{ 
+              color: '#f3f4f6',
+              fontFamily: "'Cinzel', serif"
+            }}
+          >
+            Loading Leaderboard...
+          </p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-dark-bg flex flex-col">
+    <div 
+      className="min-h-screen flex flex-col"
+      style={{ background: '#0b0f14' }}
+    >
       <Navbar warrior={warrior} timeRemaining={timeRemaining} isContestActive={isContestActive} />
 
       <div className="flex-1 overflow-y-auto p-8">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-serif font-bold text-gold mb-2">
-              🏆 Leaderboard 🏆
+          <div className="text-center mb-10">
+            <div 
+              className="text-6xl mb-4"
+              style={{
+                filter: 'drop-shadow(0 0 30px rgba(212, 175, 55, 0.5))'
+              }}
+            >
+              🏆
+            </div>
+            <h1 
+              className="text-5xl font-bold mb-3"
+              style={{
+                fontFamily: "'Cinzel', serif",
+                color: '#d4af37',
+                textShadow: '0 0 20px rgba(212, 175, 55, 0.4)',
+                letterSpacing: '0.05em'
+              }}
+            >
+              HALL OF GLORY
             </h1>
-            <p className="text-gray-400">
-              Battle for glory! Top warriors ranked by XP and speed.
+            <p 
+              className="text-lg"
+              style={{ 
+                color: 'rgba(243, 244, 246, 0.6)',
+                fontFamily: "'Cormorant Garamond', serif",
+                fontStyle: 'italic'
+              }}
+            >
+              The mightiest warriors ranked by skill and valor
             </p>
           </div>
 
           {/* Leaderboard Table */}
-          <div className="bg-dark-surface border border-stone rounded-lg overflow-hidden shadow-2xl">
-            <table className="w-full">
-              <thead className="bg-shadow border-b border-stone">
+          <div 
+            className="card-gothic overflow-hidden"
+            style={{ animation: 'fadeIn 0.6s ease-out' }}
+          >
+            <table className="w-full table-gothic">
+              <thead>
                 <tr>
-                  <th className="px-6 py-4 text-left text-sm font-serif font-bold text-gold">
+                  <th className="px-6 py-4 text-left">
                     Rank
                   </th>
-                  <th className="px-6 py-4 text-left text-sm font-serif font-bold text-gold">
+                  <th className="px-6 py-4 text-left">
                     Warrior
                   </th>
-                  <th className="px-6 py-4 text-left text-sm font-serif font-bold text-gold">
+                  <th className="px-6 py-4 text-left">
                     Clan
                   </th>
-                  <th className="px-6 py-4 text-right text-sm font-serif font-bold text-gold">
+                  <th className="px-6 py-4 text-right">
                     XP
                   </th>
-                  <th className="px-6 py-4 text-right text-sm font-serif font-bold text-gold">
+                  <th className="px-6 py-4 text-right">
                     Solved
                   </th>
                 </tr>
@@ -88,29 +135,52 @@ export function LeaderboardPage() {
               <tbody>
                 {leaderboard.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="px-6 py-8 text-center text-gray-400">
-                      No warriors yet. Be the first to solve a quest!
+                    <td 
+                      colSpan={5} 
+                      className="px-6 py-12 text-center"
+                      style={{ color: 'rgba(243, 244, 246, 0.4)' }}
+                    >
+                      <div className="text-4xl mb-3" style={{ opacity: 0.3 }}>🎯</div>
+                      <p style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontSize: '1.125rem' }}>
+                        No warriors yet. Be the first to solve a quest!
+                      </p>
                     </td>
                   </tr>
                 ) : (
                   leaderboard.map((entry) => (
                     <tr
                       key={entry.warrior.id}
-                      className={`border-b border-stone transition-all ${
-                        isCurrentWarrior(entry.warrior.id)
-                          ? 'bg-gold/10 border-gold'
-                          : 'hover:bg-shadow'
-                      }`}
+                      className="transition-all duration-200"
+                      style={{
+                        background: isCurrentWarrior(entry.warrior.id)
+                          ? 'rgba(212, 175, 55, 0.08)'
+                          : 'transparent',
+                        borderBottom: isCurrentWarrior(entry.warrior.id)
+                          ? '1px solid rgba(212, 175, 55, 0.3)'
+                          : '1px solid rgba(45, 55, 72, 0.5)'
+                      }}
                     >
                       <td className="px-6 py-4">
-                        <div className="flex items-center space-x-2">
+                        <div className="flex items-center space-x-3">
                           {getRankEmoji(entry.rank) && (
-                            <span className="text-2xl">{getRankEmoji(entry.rank)}</span>
+                            <span 
+                              className="text-3xl"
+                              style={{
+                                filter: entry.rank === 1 
+                                  ? 'drop-shadow(0 0 8px rgba(212, 175, 55, 0.6))' 
+                                  : 'none'
+                              }}
+                            >
+                              {getRankEmoji(entry.rank)}
+                            </span>
                           )}
                           <span
-                            className={`text-lg font-bold ${
-                              entry.rank <= 3 ? 'text-gold' : 'text-parchment'
-                            }`}
+                            className="text-xl font-bold"
+                            style={{
+                              color: entry.rank <= 3 ? '#d4af37' : '#f3f4f6',
+                              fontFamily: "'Cinzel', serif",
+                              textShadow: entry.rank === 1 ? '0 0 10px rgba(212, 175, 55, 0.4)' : 'none'
+                            }}
                           >
                             #{entry.rank}
                           </span>
@@ -118,30 +188,53 @@ export function LeaderboardPage() {
                       </td>
                       <td className="px-6 py-4">
                         <span
-                          className={`font-medium ${
-                            isCurrentWarrior(entry.warrior.id)
-                              ? 'text-gold-light font-bold'
-                              : 'text-parchment'
-                          }`}
+                          className="font-semibold text-base"
+                          style={{
+                            color: isCurrentWarrior(entry.warrior.id)
+                              ? '#f5d27a'
+                              : '#f3f4f6',
+                            fontWeight: isCurrentWarrior(entry.warrior.id) ? 700 : 600
+                          }}
                         >
                           {entry.warrior.name}
                           {isCurrentWarrior(entry.warrior.id) && (
-                            <span className="ml-2 text-xs text-gold">(You)</span>
+                            <span 
+                              className="ml-2 text-xs px-2 py-0.5 rounded"
+                              style={{ 
+                                color: '#d4af37',
+                                background: 'rgba(212, 175, 55, 0.15)',
+                                border: '1px solid rgba(212, 175, 55, 0.3)'
+                              }}
+                            >
+                              YOU
+                            </span>
                           )}
                         </span>
                       </td>
                       <td className="px-6 py-4">
-                        <span className="text-gray-400 text-sm">
+                        <span 
+                          className="text-sm"
+                          style={{ color: 'rgba(243, 244, 246, 0.5)' }}
+                        >
                           {entry.warrior.clan || '-'}
                         </span>
                       </td>
                       <td className="px-6 py-4 text-right">
-                        <span className="text-gold font-bold text-lg">
+                        <span 
+                          className="text-xl font-bold"
+                          style={{
+                            color: '#d4af37',
+                            fontFamily: "'Cinzel', serif"
+                          }}
+                        >
                           {entry.warrior.xp}
                         </span>
                       </td>
                       <td className="px-6 py-4 text-right">
-                        <span className="text-parchment font-medium">
+                        <span 
+                          className="text-base font-semibold"
+                          style={{ color: '#f3f4f6' }}
+                        >
                           {entry.warrior.solved_count}
                         </span>
                       </td>
@@ -153,8 +246,15 @@ export function LeaderboardPage() {
           </div>
 
           {/* Footer Note */}
-          <div className="mt-6 text-center text-sm text-gray-400">
-            <p>🔥 Real-time updates • Sorted by XP then earliest submission</p>
+          <div 
+            className="mt-8 text-center text-sm"
+            style={{ color: 'rgba(243, 244, 246, 0.5)' }}
+          >
+            <p>
+              <span style={{ color: '#d4af37' }}>✨</span>
+              {' '}Real-time updates • Ranked by XP and submission time{' '}
+              <span style={{ color: '#d4af37' }}>✨</span>
+            </p>
           </div>
         </div>
       </div>
