@@ -45,24 +45,49 @@ export function SubmissionResult({ result, onClose }: SubmissionResultProps) {
 
   return (
     <div
-      className={`rounded-lg border p-6 ${
-        isAccepted
-          ? 'bg-green-900/20 border-green-600'
-          : 'bg-red-900/20 border-red-600'
-      }`}
+      className="rounded-lg p-6"
+      style={{
+        background: isAccepted
+          ? 'linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(17, 24, 39, 0.8) 100%)'
+          : 'linear-gradient(135deg, rgba(127, 29, 29, 0.15) 0%, rgba(17, 24, 39, 0.8) 100%)',
+        border: isAccepted
+          ? '2px solid rgba(16, 185, 129, 0.5)'
+          : '2px solid rgba(127, 29, 29, 0.5)',
+        boxShadow: isAccepted
+          ? '0 0 20px rgba(16, 185, 129, 0.2), 0 8px 32px rgba(0, 0, 0, 0.6)'
+          : '0 0 20px rgba(127, 29, 29, 0.2), 0 8px 32px rgba(0, 0, 0, 0.6)',
+        animation: 'fadeIn 0.4s ease-out'
+      }}
     >
-      <div className="flex items-start justify-between mb-4">
-        <div className="flex items-center space-x-3">
-          <span className="text-4xl">{getStatusEmoji()}</span>
+      <div className="flex items-start justify-between mb-6">
+        <div className="flex items-center space-x-4">
+          <span 
+            className="text-5xl"
+            style={{
+              filter: isAccepted
+                ? 'drop-shadow(0 0 12px rgba(16, 185, 129, 0.6))'
+                : 'drop-shadow(0 0 12px rgba(127, 29, 29, 0.6))'
+            }}
+          >
+            {getStatusEmoji()}
+          </span>
           <div>
             <h3
-              className={`text-2xl font-serif font-bold ${
-                STATUS_COLORS[result.status]
-              }`}
+              className="text-3xl font-bold"
+              style={{
+                fontFamily: "'Cinzel', serif",
+                color: isAccepted ? '#10b981' : '#ef4444',
+                textShadow: isAccepted
+                  ? '0 0 10px rgba(16, 185, 129, 0.4)'
+                  : '0 0 10px rgba(239, 68, 68, 0.4)'
+              }}
             >
               {getStatusText()}
             </h3>
-            <p className="text-sm text-gray-400 mt-1">
+            <p 
+              className="text-sm mt-1"
+              style={{ color: 'rgba(243, 244, 246, 0.6)' }}
+            >
               {result.passed_count} / {result.total_count} test cases passed
             </p>
           </div>
@@ -70,7 +95,13 @@ export function SubmissionResult({ result, onClose }: SubmissionResultProps) {
         {onClose && (
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-parchment text-2xl"
+            className="text-3xl font-bold transition-colors duration-200"
+            style={{ 
+              color: 'rgba(243, 244, 246, 0.5)',
+              lineHeight: 1
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.color = '#d4af37'}
+            onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(243, 244, 246, 0.5)'}
           >
             ×
           </button>
